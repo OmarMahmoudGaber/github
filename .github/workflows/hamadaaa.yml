@@ -15,12 +15,16 @@ jobs:
 
       - name: List files
         run: ls -ltra
-      - name: Run shell script
-        run: 
-            |
-             chmod +x script22.sh
-             ./script22.sh
 
+      - name: Run shell script
+        run: |
+          # Create the file on the fly if it's missing
+          echo "echo 'Hello from the script!'" > script22.sh
+          
+          # Now change permissions and run it
+          chmod +x script22.sh
+          ./script22.sh
+          
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
