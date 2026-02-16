@@ -1,26 +1,37 @@
 name: my second workflow | training 
 
 on:
-    push:
-        branches: main
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows you to run this manually for testing
+
 jobs:
-    first_job:
-        runs-on: ubuntu-latest
-        steps:
-            - name: checkout
-              uses: actions/checkout@v6.0.2
+  first_job:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-            - name: Upload a Build Artifact
-              uses: actions/upload-artifact@v4
+      - name: Create dummy script
+        run: |
+          echo "echo 'Hello from script22!'" > script22.sh
+          echo "Current date: $(date)" > build-output.txt
 
-            - name: list files 
-              run : ls -ltra
+      - name: List files
+        run: ls -ltra
 
-            - name: run shell script
-              run: 
-                |
-                  chmod +x script22.sh
-                  ./script22.sh
+      - name: Run shell script
+        run: |
+          chmod +x script22.sh
+          ./script22.sh
         
-            - name: checkout repo files
-              run: ls
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: training-artifact
+          path: build-output.txt # Change this to the specific file/folder you want to save
+
+      - name: Checkout repo files
+        run: ls -R
