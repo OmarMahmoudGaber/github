@@ -27,6 +27,3 @@ jobs:
         with:
           name: training-artifact
           path: dragon.txt
-
-      - name: Checkout repo files
-        run: ls -R
