@@ -15,7 +15,6 @@ jobs:
 
       - name: List files
         run: ls -ltra
-
       - name: Run shell script
         run: 
             |
