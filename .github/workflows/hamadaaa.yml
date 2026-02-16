@@ -17,7 +17,8 @@ jobs:
         run: ls -ltra
 
       - name: Run shell script
-        run: |
+        run: 
+            |
           chmod +x script22.sh
           ./script22.sh
 
