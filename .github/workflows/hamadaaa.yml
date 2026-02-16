@@ -25,5 +25,5 @@ jobs:
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: training-artifact
+          name: final
           path: dragon.txt
