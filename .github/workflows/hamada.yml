@@ -2,7 +2,7 @@ name: my first workflow | training
 
 on:
     push:
-    branches: main
+        branches: main
 jobs:
     first_job:
         runs-on: ubuntu-latest
