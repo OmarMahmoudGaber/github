@@ -1,4 +1,4 @@
-name: my first workflow | training 
+name: my second workflow | training 
 
 on:
     push:
@@ -7,8 +7,9 @@ jobs:
     first_job:
         runs-on: ubuntu-latest
         steps:
-        #    - name: checkout
-        #      uses: actions/checkout@v6.0.2
+            - name: checkout
+              uses: actions/checkout@v6.0.2
+              
             - name: Upload a Build Artifact
               uses: actions/upload-artifact@v6.0.0
 
