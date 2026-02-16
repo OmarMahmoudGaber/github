@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: checkout
+        uses: actions/checkout@v6.0.2
 
       - name: List files
         run: ls -ltra
@@ -22,6 +22,7 @@ jobs:
             |
              chmod +x script22.sh
              ./script22.sh
+
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
