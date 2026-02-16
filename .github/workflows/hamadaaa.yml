@@ -9,7 +9,7 @@ jobs:
         steps:
             - name: checkout
               uses: actions/checkout@v6.0.2
-              
+
             - name: Upload a Build Artifact
               uses: actions/upload-artifact@v6.0.0
 
@@ -21,3 +21,6 @@ jobs:
                 |
                   chmod +x script22.sh
                   ./script22.sh
+        
+            - name: checkout repo files
+              run: ls
