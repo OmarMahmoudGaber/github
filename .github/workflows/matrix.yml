@@ -1,5 +1,4 @@
 name: my Fourth workflow | training 
-
 on:
   push:
     branches:
@@ -9,10 +8,10 @@ jobs:
   matrix_run:
       runs-on: ${{ matrix.os }}
       strategy:
-      matrix:
-        os: [ubuntu-latest, ubuntu-20.04, windows-latest]
-        images: [hello-world, alpine]
-        exclude:
+        matrix:
+          os: [ubuntu-latest, ubuntu-20.04, windows-latest]
+          images: [hello-world, alpine]
+          exclude:
           - os: windows-latest
             images: alpine
       steps:
