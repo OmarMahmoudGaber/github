@@ -20,9 +20,8 @@ jobs:
       - name: Run shell script
         run: 
             |
-           chmod +x script22.sh
-           ./script22.sh
-        
+             chmod +x script22.sh
+             ./script22.sh
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4
         with:
