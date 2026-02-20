@@ -5,30 +5,20 @@ on: [push]
 jobs:
   run-etl-job:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
 
       - name: Install Libraries
-        # This MUST run before 'Execute ETL' to avoid the ModuleNotFoundError
-        run: pip install -r requirements.txt
+        run: pip install pandas pytest dbt-sqlite
 
       - name: Execute ETL
-        # Once duckdb is installed, this script will now generate 'cleaned_data.csv'
         run: python etl.py
 
       - name: Run Unit Tests
-        # Now that 'cleaned_data.csv' exists, pytest will find the file!
         run: pytest tests.py
 
-      - name: install dbt
-        run: pip install dbt-duckdb
-
       - name: Run dbt models
-        run: dbt run --profiles-dir . --target dev
+        run: dbt run --profiles-dir .

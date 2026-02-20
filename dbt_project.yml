@@ -1,12 +1,3 @@
 name: 'my_etl_project'
-version: '1.0.0'
-config-version: 2
-
-profile: 'local_duckdb' 
-
+profile: 'local_sqlite' # Matches profiles.yml
 model-paths: ["models"]
-test-paths: ["tests"]
-
-models:
-  my_etl_project:
-    +materialized: table
