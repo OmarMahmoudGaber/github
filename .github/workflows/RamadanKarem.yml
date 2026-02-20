@@ -28,9 +28,7 @@ jobs:
         run: pip install dbt-duckdb
 
       - name: Run dbt models
-        run: |
-          dbt run --profiles-dir . --target dev
+        run: dbt run --profiles-dir . --target dev
           
       - name: Test dbt models
-        run: |
-          dbt test --profiles-dir . --target dev
+        run: dbt test --profiles-dir . --target dev
