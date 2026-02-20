@@ -3,13 +3,12 @@ import sqlite3
 import os
 
 def run_etl():
-    # --- 1. EXTRACT ---
     if not os.path.exists('data.csv'):
         print("Error: data.csv not found.")
         return
     df = pd.read_csv('data.csv')
 
-    # --- 2. TRANSFORM ---
+
     # Standardize names and handle nulls
     df['customer_name'] = df['customer_name'].fillna('Guest Customer')
     # Clean numeric columns to avoid dbt math errors
