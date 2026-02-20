@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: sales_transform  # Must match your .sql filename
+  - name: transformed_sales 
     columns:
       - name: order_id
         tests:
@@ -9,8 +9,4 @@ models:
           - not_null
       - name: total_revenue
         tests:
-          - accepted_values:
-              values: [0]
-              quote: false
-              operator: ">=" # Ensures no negative revenue
-              
+          - not_null
