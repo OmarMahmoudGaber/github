@@ -1,12 +1,12 @@
 version: 2
 
 models:
-  - name: transformed_sales 
+  - name: transformed_sales
     columns:
       - name: order_id
         tests:
           - unique
           - not_null
-      - name: total_revenue
+      - name: total_revenue 
         tests:
           - not_null
