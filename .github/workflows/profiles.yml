@@ -3,4 +3,5 @@ local_duckdb:
   outputs:
     dev:
       type: duckdb
-      path: 'dev.duckdb' # The database file your Python script populates
+      path: 'dev.duckdb' 
+
