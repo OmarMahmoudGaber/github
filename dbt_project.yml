@@ -1,0 +1,13 @@
+name: 'my_etl_project'
+version: '1.0.0'
+config-version: 2
+
+# This must match the profile name in your profiles.yml
+profile: 'local_duckdb' 
+
+model-paths: ["models"]
+test-paths: ["tests"]
+
+models:
+  my_etl_project:
+    +materialized: table

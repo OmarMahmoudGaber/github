@@ -1,6 +1,0 @@
-name: 'my_data_task'
-version: '1.0.0'
-config-version: 2
-profile: 'local_duckdb' # Connects to profiles.yml
-
-model-paths: ["models"] # Where your SQL lives
