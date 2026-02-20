@@ -22,7 +22,7 @@ jobs:
         run: python etl.py
 
       - name: Run Unit Tests
-        run: pytest test.py
+        run: pytest tests.py
 
       - name: Install dbt
         run: pip install dbt-postgres
