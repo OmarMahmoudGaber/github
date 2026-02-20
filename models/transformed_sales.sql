@@ -6,4 +6,4 @@ SELECT
     unit_price,
     (quantity * unit_price) AS total_revenue,
     region
-FROM raw_sales_data -- This table was created by your Python script
+FROM raw_sales_data 
