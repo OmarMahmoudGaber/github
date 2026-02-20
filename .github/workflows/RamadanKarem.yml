@@ -24,8 +24,8 @@ jobs:
       - name: Run Unit Tests
         run: pytest tests.py
 
-      - name: Install dbt
-        run: pip install dbt-postgres
+      - name: install dbt
+        run: pip install dbt-duckdb
 
       - name: Run dbt models
         run: |
