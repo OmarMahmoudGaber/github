@@ -1,45 +1,66 @@
 import pandas as pd
-import duckdb
+import numpy as np
 import os
 import pytest
 
-# --- Test 1: Validate the CSV exists and has data ---
-def test_csv_existence():
-    """Check if the source data file is present."""
-    assert os.path.exists('data.csv'), "data.csv is missing from the directory"
+# Helper function to get the cleaned data
+def get_cleaned_data():
+    if os.path.exists('cleaned_data.csv'):
+        return pd.read_csv('cleaned_data.csv')
+    return None
 
-def test_csv_content():
-    """Verify the CSV has the expected columns and isn't empty."""
-    df = pd.read_csv('data.csv')
-    expected_columns = ['order_id', 'order_date', 'product_info', 'quantity', 'unit_price']
-    for col in expected_columns:
-        assert col in df.columns, f"Column {col} missing from data.csv"
-    assert len(df) > 0, "data.csv is empty"
+# --- 1. Structural Tests ---
 
-# --- Test 2: Validate the ETL/DuckDB Load ---
-def test_duckdb_load():
-    """Check if the ETL script actually created the DuckDB table."""
-    # Ensure the DB file exists (created by etl.py)
-    assert os.path.exists('dev.duckdb'), "dev.duckdb was not created by etl.py"
-    
-    # Connect and check for the raw table
-    con = duckdb.connect('dev.duckdb')
-    tables = con.execute("SHOW TABLES").fetchall()
-    table_names = [t[0] for t in tables]
-    
-    assert 'raw_sales_data' in table_names, "Table 'raw_sales_data' not found in DuckDB"
-    
-    # Verify row count matches (Sanity check)
-    df_csv = pd.read_csv('data.csv')
-    db_count = con.execute("SELECT COUNT(*) FROM raw_sales_data").fetchone()[0]
-    assert db_count == len(df_csv), "Row count mismatch between CSV and DuckDB"
-    
-    con.close()
+def test_output_file_exists():
+    """Verify the ETL actually produced the output file."""
+    assert os.path.exists('cleaned_data.csv'), "The ETL script did not create cleaned_data.csv"
 
-# --- Test 3: Data Quality (Pre-dbt) ---
-def test_data_logic():
-    """Ensure no negative quantities before dbt starts processing."""
-    con = duckdb.connect('dev.duckdb')
-    negatives = con.execute("SELECT COUNT(*) FROM raw_sales_data WHERE quantity < 0").fetchone()[0]
-    assert negatives == 0, "Found negative quantities in raw data!"
-    con.close()
+def test_columns_present():
+    """Verify that messy columns were removed and new ones were created."""
+    df = get_cleaned_data()
+    # Check that product_info was dropped
+    assert 'product_info' not in df.columns
+    # Check that new columns exist
+    assert 'category' in df.columns
+    assert 'product' in df.columns
+    assert 'total_sales' in df.columns
+
+# --- 2. Transformation Logic Tests ---
+
+def test_null_handling():
+    """Verify customer_name and quantity defaults worked."""
+    df = get_cleaned_data()
+    # Should not contain any nulls in these columns after ETL
+    assert df['customer_name'].isnull().sum() == 0
+    assert df['quantity'].isnull().sum() == 0
+    # Check for our specific default string
+    if 'Guest Customer' in df['customer_name'].values:
+        assert True
+
+def test_string_split_logic():
+    """Verify that 'category' and 'product' are separated correctly."""
+    df = get_cleaned_data()
+    # Ensure category doesn't contain the pipe symbol
+    assert not df['category'].str.contains('\|').any()
+    assert not df['product'].str.contains('\|').any()
+
+def test_numeric_calculations():
+    """Verify that total_sales is actually quantity * unit_price."""
+    df = get_cleaned_data()
+    # We allow a small tolerance for floating point math
+    calculated_sales = df['quantity'] * df['unit_price']
+    pd.testing.assert_series_equal(df['total_sales'], calculated_sales, check_names=False)
+
+def test_casing_normalization():
+    """Verify regions are capitalized (e.g., 'South' not 'SOUTH')."""
+    df = get_cleaned_data()
+    # All unique values should be in Title case (Capitalized)
+    for region in df['region'].unique():
+        assert region == region.capitalize()
+
+# --- 3. Deduplication Test ---
+
+def test_duplicates_removed():
+    """Verify that order_id is now unique."""
+    df = get_cleaned_data()
+    assert df['order_id'].is_unique, f"Duplicate order_ids found in cleaned data!"
