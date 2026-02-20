@@ -1,0 +1,10 @@
+order_id,order_date,customer_name,product_info,quantity,unit_price,region,status
+ORD-5001,2023-01-15,Alice Thompson,Electronics|Laptop,1,1200.00,North,shipped
+ORD-5002,01/16/2023,Bob Smith,Electronics|Mouse,2,25.50,SOUTH,pending
+ORD-5003,2023-01-17,,Appliances|Coffee Maker,1,89.00,West,shipped
+ORD-5004,2023-01-18,Charlie Brown,Furniture|Office Chair,,150.00,North,cancelled
+ORD-5005,19-Jan-2023,Alice Thompson,Electronics|Laptop,1,1200.00,NORTH,shipped
+ORD-5006,2023-01-20,David Wilson,Furniture|Desk Lamp,4,45.00,East,returned
+ORD-5007,2023-01-21,Eve Adams,Appliances|Toaster,2,30.00,west,shipped
+ORD-5008,2023-01-22,Frank Miller,Electronics|Headphones,1,invalid,South,pending
+ORD-5009,2023-01-23,Bob Smith,Electronics|Mouse,2,25.50,SOUTH,shipped

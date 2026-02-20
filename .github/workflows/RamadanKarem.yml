@@ -1,0 +1,36 @@
+name: ETL Pipeline
+
+on: [push]
+
+jobs:
+  run-etl-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Libraries
+        run: pip install -r requirements.txt
+
+      - name: Execute ETL
+        run: python etl.py
+
+      - name: Run Unit Tests
+        run: pytest test.py
+
+      - name: Install dbt
+        run: pip install dbt-postgres
+
+      - name: Run dbt models
+        run: |
+          dbt run --profiles-dir . --target dev
+          
+      - name: Test dbt models
+        run: |
+          dbt test --profiles-dir . --target dev
