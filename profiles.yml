@@ -3,8 +3,10 @@ my_sqlite_profile:
   outputs:
     dev:
       type: sqlite
-      database: 'my_data.db' # Path to the file created in Step 2
+      database: 'my_data.db' # The file created by your etl.py
       schema: 'main'
+      # ADD THIS LINE BELOW
+      schema_directory: 'dbt_schema' 
       schemas_and_paths:
         main: 'my_data.db'
       threads: 1

@@ -14,11 +14,15 @@ jobs:
       - name: Install Libraries
         run: pip install pandas pytest dbt-sqlite
 
+
       - name: Execute ETL
         run: python etl.py
 
       - name: Run Unit Tests
         run: pytest tests.py
+
+      - name: Prepare dbt Schema Directory
+        run: mkdir -p dbt_schema
 
       - name: Run dbt models
         run: dbt run --profiles-dir .
