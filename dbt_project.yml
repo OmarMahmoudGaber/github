@@ -1,3 +1,4 @@
 name: 'my_etl_project'
-profile: 'local_sqlite' # Matches profiles.yml
+version: '1.0.0'
+profile: 'my_sqlite_profile' # Must match profiles.yml name
 model-paths: ["models"]

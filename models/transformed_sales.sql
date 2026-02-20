@@ -1,11 +1,9 @@
 SELECT
     order_id,
-    CAST(order_date AS DATE) as clean_date,
-    split_part(product_info, '|', 1) as category,
-    split_part(product_info, '|', 2) as product,
+    order_date,
+    customer_name,
     quantity,
     unit_price,
-    (quantity * unit_price) as total_revenue,
+    (quantity * unit_price) AS total_revenue,
     region
-FROM raw_sales_data
-WHERE status != 'cancelled'
+FROM raw_sales_data -- This table was created by your Python script
